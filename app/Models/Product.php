@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Product extends Model
+{
+    use HasFactory, HasUlids;
+
+    protected $fillable = [
+        'name',
+        'price',
+        'stock_quantity',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'price' => 'decimal:2',
+            'stock_quantity' => 'integer',
+        ];
+    }
+}
