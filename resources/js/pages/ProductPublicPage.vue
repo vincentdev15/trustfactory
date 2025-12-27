@@ -5,7 +5,11 @@
         </div>
         
         <div class="w-1/3 flex flex-col justify-between gap-8">
-            <div class="text-5xl mt-4">{{ product.name }}</div>
+            <div class="flex flex-col gap-4">
+                <div class="text-5xl mt-4">{{ product.name }}</div>
+
+                <div class="italic text-xl">Stock : {{ product.stock_quantity }}</div>
+            </div>
 
             <div class="mb-4 flex flex-col gap-4 text-xl">
                 <div class="flex items-center justify-between">
