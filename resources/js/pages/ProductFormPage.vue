@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <vs-button @submit.prevent="save()">Save</vs-button>
+                        <vs-button type="submit">Save</vs-button>
 
                         <vs-link-as-button :to="{ name: 'pages.dashboard' }">Cancel</vs-link-as-button>
                     </div>

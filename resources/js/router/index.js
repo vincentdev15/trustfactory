@@ -6,15 +6,17 @@ import api from '@/services/api.js';
 const DashboardPage = () => import('@/pages/DashboardPage.vue');
 const HomePage = () => import('@/pages/HomePage.vue');
 const LoginPage = () => import('@/pages/LoginPage.vue');
-const MarketplacePage = () => import('@/pages/MarketplacePage.vue');
+const MarketplacePublicPage = () => import('@/pages/MarketplacePublicPage.vue');
 const ProductFormPage = () => import('@/pages/ProductFormPage.vue');
+const ProductPublicPage = () => import('@/pages/ProductPublicPage.vue');
 const RegistrationPage = () => import('@/pages/RegistrationPage.vue');
 
 const routes = [
     { path: '/dashboard', name: 'pages.dashboard', component: DashboardPage, meta: { require_auth: true, require_admin: true } },
     { path: '/home', name: 'pages.home', component: HomePage, meta: { require_auth: false } },
     { path: '/login', name: 'pages.login', component: LoginPage, meta: { require_auth: false } },
-    { path: '/marketplace', name: 'pages.marketplace', component: MarketplacePage, meta: { require_auth: false } },
+    { path: '/public/marketplace', name: 'public.pages.marketplace', component: MarketplacePublicPage, meta: { require_auth: false } },
+    { path: '/public/product/:id', name: 'public.pages.product', component: ProductPublicPage, meta: { require_auth: false } },
     { path: '/products/create', name: 'pages.products.create', component: ProductFormPage, meta: { require_auth: true, require_admin: true } },
     { path: '/products/:id/edit', name: 'pages.products.edit', component: ProductFormPage, meta: { require_auth: true, require_admin: true } },
     { path: '/register', name: 'pages.register', component: RegistrationPage, meta: { require_auth: false } },
@@ -46,7 +48,7 @@ router.beforeEach(async (to, from) => {
             return { name: 'pages.marketplace' };
         }
         
-        if (to.name === 'pages.login' || to.name === 'pages.home') {
+        if (to.name === 'pages.login') {
             return authStore.user.is_admin ? { name: 'pages.dashboard' } : { name: 'pages.marketplace' };
         }
     }

@@ -15,6 +15,8 @@ class ApiProductController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Product::class);
+
         $products = Product::orderBy('name')->get();
 
         return $products->toResourceCollection();

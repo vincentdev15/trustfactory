@@ -34,6 +34,11 @@ app.component('VsLinkAsButton', VsLinkAsButton);
 app.component('VsRadios', VsRadios);
 app.component('VsSelect', VsSelect);
 
+// Loading app components
+import ProductCard from '@/components/app/ProductCard.vue';
+
+app.component('ProductCard', ProductCard);
+
 // Store
 import { createPinia } from 'pinia';
 
