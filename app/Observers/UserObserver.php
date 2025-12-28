@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Cart;
 use App\Models\User;
+use App\Enums\CartStatusEnum;
 
 class UserObserver
 {
@@ -14,6 +15,7 @@ class UserObserver
     {
         Cart::create([
             'name' => 'My cart',
+            'status' => CartStatusEnum::OPEN,
             'user_id' => $user->id,
         ]);
     }

@@ -4,14 +4,14 @@ namespace App\Enums;
 
 enum CartStatusEnum: string
 {
-    const ACTIVE = 'active';
-    const CHECKOUT = 'checkout';
-    const PAID = 'paid';
+    case OPEN = 'open';
+    case CHECKOUT = 'checkout';
+    case PAID = 'paid';
 
     public function label(): string
     {
         return match($this) {
-            self::ACTIVE => 'Active',
+            self::OPEN => 'Open',
             self::CHECKOUT => 'Checkout',
             self::PAID => 'Paid',
         };

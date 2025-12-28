@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Enums\CartStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class CartFactory extends Factory
     {
         return [
             'name' => fake()->words(2, true),
+            'status' => CartStatusEnum::OPEN,
             'user_id' => User::factory(),
         ];
     }

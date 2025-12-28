@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CartStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -14,12 +15,25 @@ class Cart extends Model
 
     protected $fillable = [
         'name',
+        'status',
         'user_id',
     ];
 
     protected $attributes = [
         'name' => 'My cart',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'status' => CartStatusEnum::class,
+        ];
+    }
 
     public function items(): HasMany
     {
