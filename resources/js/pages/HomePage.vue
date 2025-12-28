@@ -1,6 +1,6 @@
 <template>
     <div class="grow flex flex-col items-center justify-center gap-12 rounded-lg text-5xl text-center text-enhance bg-dark">
-        <div>Welcome to</div>
+        <div>Welcome to the</div>
 
         <img :src="image" alt="Logo Trustfactort">
         

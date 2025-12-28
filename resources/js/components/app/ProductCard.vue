@@ -1,7 +1,7 @@
 <template>
     <article class="flex flex-col justify-between rounded-lg group transition-all border-2 border-gray-300 hover:border-primary overflow-hidden">
         <RouterLink
-            :to="{ name: 'public.pages.product', params: { id: product.id } }"
+            :to="{ name: 'pages.product', params: { id: product.id } }"
             id="product-public-page"
         >
             <div class="h-60 overflow-hidden">
