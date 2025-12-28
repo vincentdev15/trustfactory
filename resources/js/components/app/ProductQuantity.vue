@@ -16,7 +16,7 @@
                 type="submit"
                 :inverse="true"
                 @click="updateQuantity(false)"
-                :disabled="quantity === 0 || !item.can_update"
+                :disabled="quantity === 0"
             >-</vs-button>
 
             <vs-input class="w-20 text-center" v-model="quantity"></vs-input>
@@ -26,7 +26,7 @@
                 type="submit"
                 :inverse="true"
                 @click="updateQuantity(true)"
-                :disabled="product.stock_quantity === quantity || !item.can_update"
+                :disabled="quantity >= item.available_quantity"
             >+</vs-button>
         </div>
     </div>

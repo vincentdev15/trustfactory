@@ -1,7 +1,7 @@
 import api from './api.js';
 
 export default {
-    async index(filters) {
+    async index() {
         try {
             const res = await api.get('/carts', {
                 params: filters,
@@ -23,9 +23,9 @@ export default {
         }
     },
 
-    async show(id) {
+    async show() {
         try {
-            const res = await api.get(`/carts/${id}`);
+            const res = await api.get('/carts');
 
             return res;
         } catch (error) {
@@ -35,7 +35,7 @@ export default {
 
     async update(cart) {
         try {
-            const res = await api.put(`/carts/${cart.id}`, { ...cart });
+            const res = await api.put(`/carts`, { ...cart });
 
             return res;
         } catch (error) {
@@ -43,9 +43,19 @@ export default {
         }
     },
 
-    async delete(id) {
+    async validate() {
         try {
-            const res = await api.delete(`/carts/${id}`);
+            const res = await api.patch('/carts');
+
+            return res;
+        } catch (error) {
+            return error;
+        }
+    },
+
+    async delete() {
+        try {
+            const res = await api.delete('/carts');
 
             return res;
         } catch (error) {

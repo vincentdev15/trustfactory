@@ -31,7 +31,7 @@ class SharedDatasMiddleware
                     'name' => $user->name,
                     'email' => $user->email,
                     'is_admin' => $user->is_admin,
-                    'cart' => $user->cart->load('items.product')->toResource(),
+                    'cart' => $user->cart->load('items.cart', 'items.product')->toResource(),
                 ];
             }
 

@@ -19,13 +19,21 @@
             </div>
         </RouterLink>
 
-        <div v-if="authStore.user" class="flex items-center justify-center py-2 bg-gray-100">
+        <div
+            v-if="authStore.user"
+            :class="{
+                'flex items-center justify-center py-2': true,
+                'bg-gray-100': quantity <= product.stock_quantity,
+                'bg-red-100': quantity > product.stock_quantity,
+            }"
+        >
             <product-quantity :product="product" @product-updated="onProductUpdated"></product-quantity>
         </div>
     </article>
 </template>
 
 <script setup>
+    import { computed } from 'vue';
     import { useAuthStore } from '@/stores/authStore.js';
     import { useMarketStore } from '@/stores/marketStore.js';
 
@@ -42,4 +50,12 @@
     const onProductUpdated = (updatedProduct) => {
         marketStore.updateProduct(updatedProduct);
     }
+
+    const quantity = computed(() => {
+        const item = authStore.user?.cart?.items?.find(
+            item => item.product_id === props.product.id
+        ) || null;
+
+        return item ? item.quantity : null;
+    });
 </script>

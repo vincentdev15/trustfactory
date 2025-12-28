@@ -24,6 +24,7 @@ class ItemResource extends JsonResource
             'unit_price' => $this->unit_price,
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
+            'available_quantity' => $this->available_quantity,
             'can_update' => $user?->can('update', $this->resource) ?? false,
             'can_delete' => $user?->can('delete', $this->resource) ?? false,
         ];

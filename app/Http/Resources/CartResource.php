@@ -20,10 +20,13 @@ class CartResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'status' => $this->status->value,
             'items' => ItemResource::collection($this->whenLoaded('items')),
             'total_price' => $this->total_price,
             'can_update' => $user?->can('update', $this->resource) ?? false,
             'can_delete' => $user?->can('delete', $this->resource) ?? false,
+            'can_validate' => $user?->can('validate', $this->resource) ?? false,
+            'can_pay' => $user?->can('pay', $this->resource) ?? false,
         ];
     }
 }

@@ -6,12 +6,22 @@ use App\Models\Cart;
 use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Enums\CartStatusEnum;
+use App\Services\CartService;
 use App\Http\Requests\ItemRequest;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class ApiItemController extends Controller
 {
+    private $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,20 +37,28 @@ class ApiItemController extends Controller
     {
         Gate::authorize('create', Item::class);
 
-        $product = Product::find($request->validated('product_id'));
-
         $item = new Item;
 
-        if ($product->stock_quantity > 0) {
-            $cart = auth()->user()->cart;
+        DB::transaction(function () use ($request, $item) {
+            $product = Product::find($request->validated('product_id'));
 
-            $item->fill($request->validated());
-            $item->unit_price = $product->price;
-            $item->quantity = 1;
-            $item->cart_id = $cart->id;
+            if ($product->stock_quantity > 0) {
+                $cart = auth()->user()->cart->load('items.product');
 
-            $item->save();
-        }
+                if ($cart->status === CartStatusEnum::VALIDATED) {
+                    $cart->update(['status' => CartStatusEnum::OPEN]);
+
+                    $this->cartService->incrementStock($cart);
+                }
+
+                $item->fill($request->validated());
+                $item->unit_price = $product->price;
+                $item->quantity = 1;
+                $item->cart_id = $cart->id;
+
+                $item->save();
+            }
+        });
 
         $item->refresh();
 
@@ -62,17 +80,27 @@ class ApiItemController extends Controller
     {
         Gate::authorize('update', $item);
 
-        $product = Product::find($request->validated('product_id'));
+        DB::transaction(function () use ($request, $item) {
+            $quantity = $request->validated('quantity');
 
-        $quantity = $request->validated('quantity');
+            $cart = auth()->user()->cart->load('items.product');
 
-        if ($product->stock_quantity >= $quantity) {
-            if ($quantity === 0) {
-                $item->delete();
-            } else {
-                $item->update(['quantity' => $quantity]);
+            if ($cart->status === CartStatusEnum::VALIDATED) {
+                $cart->update(['status' => CartStatusEnum::OPEN]);
+
+                $this->cartService->incrementStock($cart);
             }
-        }
+
+            $product = Product::find($request->validated('product_id'));
+
+            if ($quantity <= $product->stock_quantity) {
+                if ($quantity === 0) {
+                    $item->delete();
+                } else {
+                    $item->update(['quantity' => $quantity]);
+                }
+            }
+        });
 
         $item->refresh();
 
@@ -86,7 +114,17 @@ class ApiItemController extends Controller
     {
         Gate::authorize('delete', $item);
 
-        $item->delete();
+        DB::transaction(function () use ($item) {
+            $cart = auth()->user()->cart->load('items.product');
+
+            if ($cart->status === CartStatusEnum::VALIDATED) {
+                $cart->update(['status' => CartStatusEnum::OPEN]);
+
+                $this->cartService->incrementStock($cart);
+            }
+
+            $item->delete();
+        });
 
         return $item->toResource();
     }

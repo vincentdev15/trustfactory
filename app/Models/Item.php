@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CartStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -40,6 +41,13 @@ class Item extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+    
+    public function availableQuantity(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->cart->status === CartStatusEnum::OPEN ? $this->product->stock_quantity : $this->product->stock_quantity + $this->quantity,
+        );
     }
     
     public function totalPrice(): Attribute
