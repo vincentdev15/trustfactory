@@ -1,5 +1,5 @@
 <template>
-    <div class="xl:px-80 w-full flex gap-8">
+    <div class="xl:px-80 w-full h-100 flex gap-8">
         <div class="w-2/3">
             <img class="w-full h-full object-cover rounded-lg" src="https://picsum.photos/600/400" alt="Fake image">
         </div>
@@ -18,20 +18,16 @@
                     <div>{{ product.price }}</div>
                 </div>
 
-                <form @submit.prevent="updateQuantity()">
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <div>Quantity :</div>
+                <div v-if="authStore.user" class="flex flex-col gap-4">
+                    <div v-if="item">Quantity :</div>
 
-                            <vs-input class="w-20" id="quantity" name="quantity" type="number" min="0" step="1" v-model="product.quantity"></vs-input>
-                        </div>
-                    </div>
-                </form>
+                    <product-quantity :product="product" @product-updated="onProductUpdated"></product-quantity>
+                </div>
 
-                <div class="font-bold flex items-center justify-between">
+                <div v-if="item" class="font-bold flex items-center justify-between">
                     <div>Total price :</div>
                     
-                    <div>{{ product.price }}</div>
+                    <div>{{ item?.total_price ?? null }}</div>
                 </div>
             </div>
         </div>
@@ -39,16 +35,17 @@
 </template>
 
 <script setup>
-    import { ref, reactive, onMounted } from 'vue';
+    import { reactive, onMounted, computed } from 'vue';
     import productService from '@/services/productService.js';
-    import { useRoute, useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
+    import { useAuthStore } from '@/stores/authStore.js';
+
+    const authStore = useAuthStore();
 
     const route = useRoute();
-    const router = useRouter();
     const id = route.params.id ?? null;
 
     const product = reactive({});
-    const errors = ref([]);
     
     onMounted(async () => {
         const res = await productService.show(id);
@@ -58,13 +55,13 @@
         }
     });
 
-    const updateQuantity = async () => {
-        // const res = await productService.update(product);
-
-        // if (res.status === 200) {
-        //     router.push({ name: 'pages.dashboard' });
-        // } else {
-        //     errors.value = res.response.data.errors;
-        // }
+    const onProductUpdated = (updatedProduct) => {
+        Object.assign(product, updatedProduct);
     }
+    
+    const item = computed(() => {
+        return authStore.user?.cart?.items?.find(
+            item => item.product_id === product.id
+        ) || null;
+    });
 </script>

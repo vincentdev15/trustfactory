@@ -3,7 +3,7 @@ import api from './api.js';
 export default {
     async index(filters) {
         try {
-            const res = await api.get('/products', {
+            const res = await api.get('/carts', {
                 params: filters,
             });
 
@@ -13,9 +13,9 @@ export default {
         }
     },
 
-    async store(product) {
+    async store(cart) {
         try {
-            const res = await api.post('/products', { ...product });
+            const res = await api.post('/carts', { ...cart });
 
             return res;
         } catch (error) {
@@ -25,7 +25,7 @@ export default {
 
     async show(id) {
         try {
-            const res = await api.get(`/products/${id}`);
+            const res = await api.get(`/carts/${id}`);
 
             return res;
         } catch (error) {
@@ -33,9 +33,9 @@ export default {
         }
     },
 
-    async update(product) {
+    async update(cart) {
         try {
-            const res = await api.put(`/products/${product.id}`, { ...product });
+            const res = await api.put(`/carts/${cart.id}`, { ...cart });
 
             return res;
         } catch (error) {
@@ -43,9 +43,9 @@ export default {
         }
     },
 
-    async destroy(id) {
+    async delete(id) {
         try {
-            const res = await api.delete(`/products/${id}`);
+            const res = await api.delete(`/carts/${id}`);
 
             return res;
         } catch (error) {

@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore.js';
 import api from '@/services/api.js';
 
+const CartPage = () => import('@/pages/CartPage.vue');
 const DashboardPage = () => import('@/pages/DashboardPage.vue');
 const HomePage = () => import('@/pages/HomePage.vue');
 const LoginPage = () => import('@/pages/LoginPage.vue');
@@ -12,6 +13,7 @@ const ProductPublicPage = () => import('@/pages/ProductPublicPage.vue');
 const RegistrationPage = () => import('@/pages/RegistrationPage.vue');
 
 const routes = [
+    { path: '/cart', name: 'pages.cart', component: CartPage, meta: { require_auth: true } },
     { path: '/dashboard', name: 'pages.dashboard', component: DashboardPage, meta: { require_auth: true, require_admin: true } },
     { path: '/home', name: 'pages.home', component: HomePage, meta: { require_auth: false } },
     { path: '/login', name: 'pages.login', component: LoginPage, meta: { require_auth: false } },

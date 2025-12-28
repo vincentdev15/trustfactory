@@ -36,8 +36,10 @@ app.component('VsSelect', VsSelect);
 
 // Loading app components
 import ProductCard from '@/components/app/ProductCard.vue';
+import ProductQuantity from '@/components/app/ProductQuantity.vue';
 
 app.component('ProductCard', ProductCard);
+app.component('ProductQuantity', ProductQuantity);
 
 // Store
 import { createPinia } from 'pinia';

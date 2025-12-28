@@ -29,7 +29,7 @@
 
                     <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.stock_quantity }}</td>
 
-                    <td class="flex justify-end px-3">
+                    <td class="flex justify-end px-3 py-2 transition-all group-hover:bg-primary/20">
                         <div class="flex items-center gap-4">
                             <RouterLink class="transition-all text-primary hover:text-primary-dark" :to="{ name: 'pages.products.edit', params: { id: product.id } }" id="product-edit-page">
                                 Edit
@@ -71,7 +71,7 @@
     }
 
     const destroy = async (id) => {
-        const res = await productService.delete(id);
+        const res = await productService.destroy(id);
 
         if (res.status === 200) {
             const index = products.value.findIndex(product => product.id === id);
