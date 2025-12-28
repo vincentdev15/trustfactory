@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Cart;
+use App\Enums\CartStatusEnum;
 
 class CartService
 {
@@ -18,5 +19,14 @@ class CartService
         foreach ($cart->items as $item) {
             $item->product->increment('stock_quantity', $item->quantity);
         }
+    }
+
+    public function clear(Cart $cart)
+    {
+        foreach ($cart->items as $item) {
+            $item->delete();
+        }
+
+        $cart->update(['status' => CartStatusEnum::OPEN]);
     }
 }

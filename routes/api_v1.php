@@ -15,7 +15,8 @@ Route::middleware('shared.datas')->prefix('/v1')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::patch('carts', [ApiCartController::class, 'validate']);
+        Route::patch('carts/pay', [ApiCartController::class, 'pay']);
+        Route::patch('carts/validate', [ApiCartController::class, 'validate']);
         Route::apiResource('items', ApiItemController::class);
         Route::apiResource('products', ApiProductController::class);
     });

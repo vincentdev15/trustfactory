@@ -120,7 +120,7 @@
     }
 
     const payCart = async () => {
-        const res = await cartService.validate();
+        const res = await cartService.pay();
 
         if (res.status === 200) {
             

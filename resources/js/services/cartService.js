@@ -45,7 +45,17 @@ export default {
 
     async validate() {
         try {
-            const res = await api.patch('/carts');
+            const res = await api.patch('/carts/validate');
+
+            return res;
+        } catch (error) {
+            return error;
+        }
+    },
+
+    async pay() {
+        try {
+            const res = await api.patch('/carts/pay');
 
             return res;
         } catch (error) {
