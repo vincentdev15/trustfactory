@@ -92,7 +92,7 @@
     const addToCart = async () => {
         const res = await itemService.store(props.product.id);
 
-        if (res.status === 200) {
+        if (res.status === 201) {
             emit('product-updated', res.data.data);
         } else {
             errors.value = res.response.data.errors;

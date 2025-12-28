@@ -29,10 +29,10 @@ class ApiItemController extends Controller
 
         $product = Product::find($request->validated('product_id'));
 
+        $item = new Item;
+
         if ($product->stock_quantity > 0) {
             $cart = auth()->user()->cart;
-
-            $item = new Item;
 
             $item->fill($request->validated());
             $item->unit_price = $product->price;
@@ -42,7 +42,9 @@ class ApiItemController extends Controller
             $item->save();
         }
 
-        return $product->toResource();
+        $item->refresh();
+
+        return $item->toResource();
     }
 
     /**
@@ -68,11 +70,13 @@ class ApiItemController extends Controller
             if ($quantity === 0) {
                 $item->delete();
             } else {
-                $item->increment('quantity', $gap);
+                $item->update(['quantity' => $quantity]);
             }
         }
 
-        return $product->toResource();
+        $item->refresh();
+
+        return $item->toResource();
     }
 
     /**

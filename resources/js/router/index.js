@@ -7,7 +7,7 @@ const CartPage = () => import('@/pages/CartPage.vue');
 const DashboardPage = () => import('@/pages/DashboardPage.vue');
 const HomePage = () => import('@/pages/HomePage.vue');
 const LoginPage = () => import('@/pages/LoginPage.vue');
-const MarketplacePage = () => import('@/pages/MarketplacePage.vue');
+const MarketPage = () => import('@/pages/MarketPage.vue');
 const ProductFormPage = () => import('@/pages/ProductFormPage.vue');
 const ProductPage = () => import('@/pages/ProductPage.vue');
 const RegistrationPage = () => import('@/pages/RegistrationPage.vue');
@@ -17,7 +17,7 @@ const routes = [
     { path: '/dashboard', name: 'pages.dashboard', component: DashboardPage, meta: { require_auth: true, require_admin: true } },
     { path: '/home', name: 'pages.home', component: HomePage, meta: { require_auth: false } },
     { path: '/login', name: 'pages.login', component: LoginPage, meta: { require_auth: false } },
-    { path: '/marketplace', name: 'pages.marketplace', component: MarketplacePage, meta: { require_auth: false } },
+    { path: '/market', name: 'pages.market', component: MarketPage, meta: { require_auth: false } },
     { path: '/product/:id', name: 'pages.product', component: ProductPage, meta: { require_auth: false } },
     { path: '/products/create', name: 'pages.products.create', component: ProductFormPage, meta: { require_auth: true, require_admin: true } },
     { path: '/products/:id/edit', name: 'pages.products.edit', component: ProductFormPage, meta: { require_auth: true, require_admin: true } },

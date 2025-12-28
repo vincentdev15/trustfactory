@@ -8,8 +8,8 @@
             </li>
 
             <li class="transition-all hover:text-primary">
-                <RouterLink :to="{ name: 'pages.marketplace' }" id="marketplace-page">
-                    Marketplace
+                <RouterLink :to="{ name: 'pages.market' }" id="market-page">
+                    Market
                 </RouterLink>
             </li>
         </ul>
