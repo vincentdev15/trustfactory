@@ -7,7 +7,6 @@ use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 
@@ -30,25 +29,18 @@ class ApiItemController extends Controller
 
         $product = Product::find($request->validated('product_id'));
 
-        DB::transaction(function () use ($request, $product) {
+        if ($product->stock_quantity > 0) {
+            $cart = auth()->user()->cart;
 
-            if ($product->stock_quantity > 0) {
-                $product->decrement('stock_quantity');
+            $item = new Item;
 
-                $cart = auth()->user()->cart;
+            $item->fill($request->validated());
+            $item->unit_price = $product->price;
+            $item->quantity = 1;
+            $item->cart_id = $cart->id;
 
-                $item = new Item;
-
-                $item->fill($request->validated());
-                $item->unit_price = $product->price;
-                $item->quantity = 1;
-                $item->cart_id = $cart->id;
-
-                $item->save();
-            }
-        });
-
-        $product->refresh();
+            $item->save();
+        }
 
         return $product->toResource();
     }
@@ -70,24 +62,15 @@ class ApiItemController extends Controller
 
         $product = Product::find($request->validated('product_id'));
 
-        DB::transaction(function () use ($request, $item, $product) {
-            $current_quantity = $item->quantity;
-            $new_quantity = $request->validated('quantity');
+        $quantity = $request->validated('quantity');
 
-            $gap = $new_quantity - $current_quantity;
-
-            if ($product->stock_quantity >= $gap) {
-                $product->decrement('stock_quantity', $gap);
-
-                if ($new_quantity === 0) {
-                    $item->delete();
-                } else {
-                    $item->increment('quantity', $gap);
-                }
+        if ($product->stock_quantity >= $quantity) {
+            if ($quantity === 0) {
+                $item->delete();
+            } else {
+                $item->increment('quantity', $gap);
             }
-        });
-
-        $product->refresh();
+        }
 
         return $product->toResource();
     }

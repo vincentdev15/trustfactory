@@ -1,7 +1,11 @@
 <template>
     <div v-if="!isInCart">
         <form @submit.prevent="addToCart()">
-            <vs-button type="submit" :inverse="true">Add to Cart</vs-button>
+            <vs-button
+                type="submit"
+                :inverse="true"
+                :disabled="product.stock_quantity === 0"
+            >Add to Cart</vs-button>
         </form>
     </div>
 
@@ -22,7 +26,7 @@
                 type="submit"
                 :inverse="true"
                 @click="updateQuantity(true)"
-                :disabled="product.stock_quantity === 0 || !item.can_update"
+                :disabled="product.stock_quantity === quantity || !item.can_update"
             >+</vs-button>
         </div>
     </div>
