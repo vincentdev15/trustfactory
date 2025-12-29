@@ -2,24 +2,25 @@
 
 namespace App\Notifications;
 
-use App\Models\Product;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class LowStockNotification extends Notification implements ShouldQueue
+class DailyReportNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $product;
+    private $date;
+    private $articles;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Product $product)
+    public function __construct($date, $articles)
     {
-        $this->product = $product;
+        $this->date = $date;
+        $this->articles = $articles;
     }
 
     /**
@@ -37,10 +38,16 @@ class LowStockNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject('Low stock alert')
-            ->line("The stock for '{$this->product->name}' is running low.")
-            ->line("Remaining stock: {$this->product->stock_quantity}");
+        $mail = new MailMessage;
+
+        $mail
+            ->subject('Daily Sales Report : '.$this->date->format('Y-m-d'))
+            ->markdown('emails.daily-report', [
+                'date' => $this->date,
+                'articles' => $this->articles,
+            ]);
+
+        return $mail;
     }
 
     /**
