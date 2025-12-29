@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('teac:report')->dailyAt('22:00');
+Schedule::command('teac:report')->dailyAt(config('teac.daily_report_hour'));

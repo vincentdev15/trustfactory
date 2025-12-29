@@ -1,58 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Trustfactory eCommerce Challenge Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Technology stack
 
-## About Laravel
+### Backend technologies
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Laravel v12
+- Fortify v1
+- Sanctum v4
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Frontend technologies
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- VueJS v3
+- TailwindCSS v4
 
-## Learning Laravel
+### Database
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+To get it easier for the demonstration, I have use a simple SQLite database.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setup steps
 
-## Laravel Sponsors
+### .env file
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Make a copy of the .env.example file to the .env file and complete the following lines with your own data.
 
-### Premium Partners
+```
+MAIL_USERNAME=
+MAIL_PASSWORD=
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+CART_EXPIRATION_DELAY=1
+DAILY_REPORT_HOUR=22:00
+```
 
-## Contributing
+### Dependencies installation and app key generation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Execute the next commands to install all dependencies (PHP and node).
 
-## Code of Conduct
+(perhaprs you need to install composer globally in your development environment)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+composer install
+npm run dev && npm run build
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+### Application initialization
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+You can initialize the database fake users and fake products.
+
+```
+php artisan teac:init
+```
+
+## Application tests
+
+The application has only been tested manually.
+
+For such an application, it's important to trust the code, so the next step is to write tests to ensure all functionalities work as expected.
+
+## Functionalities
+
+### Current functionalities
+
+- register / login / logout
+- the admin can access the dashboard and see all products
+- users can browse the products, add products to their cart, remove products, update products quantities
+- users can validate and pay for the products (fake payment)
+- if a product stock is running low (custom low stock limit for each product), an email is sent to the admin
+- everyday at 22:00 by default (the hours it customizeable in the .env file), the admin receives a report with all sales of the day
+
+### Stock and cart logic
+
+- there are 2 differents stock values : the stock quantity (real stock) and the reserved stock quantity (quantity reserved after cart validation)
+- the displayed stock is the available stock (difference between the real stock and the reserved stock quantity)
+- the cart has 2 different statuses : OPEN and VALIDATED
+- when a user adds a product to the cart, there is no modification in the stock
+- when a user validated the cart, there is no modification in the stock, but the product is reserved, the displayed stock is the available stock
+- when a user adds new products or updates product quantities, the cart is set to the OPEN status back and the user has to validate it once again
+- when a user pays, the real stock and the reserved stock are updated
+- once the cart is validated, a job is dispatched to clear it after 15 min by default (the delay is customizable in the .env file), if the cart has been modified within this delay, the job will have no effect
+
+### Improvements that could be done
+
+Here are some improvements that could be done :
+
+- optimize the sales funnel according to the needs of a real project
+- 
 
 ## License
 
