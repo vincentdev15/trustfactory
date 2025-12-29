@@ -89,6 +89,7 @@ Here are some improvements that could be done :
 - add a better designed menu for the user
 - allow a user to have several carts
 - add visitor carts
+- check if the cart expiration delay and the daily report hour have valid values
 
 ## License
 
