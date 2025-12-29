@@ -27,19 +27,19 @@ class InitCommand extends Command
     {
         $dev = $this->option('dev');
 
-        $this->info('Migrating the database ...');
-
-        $this->call('migrate:fresh');
-
-        $this->info('Seeding the database ...');
-
         if ($dev) {
+            $this->info('Migrating the database ...');
+
+            $this->call('migrate:fresh');
+
+            $this->info('Seeding the database ...');
+
             $this->call('db:seed', [
                 '--class' => 'DevSeeder',
             ]);
-        } else {
-            $this->call('db:seed');
         }
+
+        $this->info('Nothing to initialize in development mode.');
 
         $this->info('The application has been initialized successfully.');
     }

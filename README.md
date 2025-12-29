@@ -31,6 +31,13 @@ CART_EXPIRATION_DELAY=1
 DAILY_REPORT_HOUR=22:00
 ```
 
+Feel free to modify these 2 lines according to your needs.
+
+```
+APP_ENV=production
+APP_DEBUG=false
+```
+
 ### Dependencies installation and app key generation
 
 Execute the next commands to install all dependencies (PHP and node).
@@ -48,7 +55,7 @@ php artisan key:generate
 You can initialize the database fake users and fake products.
 
 ```
-php artisan teac:init
+php artisan teac:init --dev
 ```
 
 ## Application tests
