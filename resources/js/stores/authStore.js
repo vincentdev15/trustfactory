@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('authStore', () => {
     const setUser = (authUser) => {
         user.value = authUser;
 
-        initialized.value = true;
+        initialized.value = authUser ? true : false;
     }
 
     return {

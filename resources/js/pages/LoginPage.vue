@@ -43,7 +43,7 @@
             user.email = null;
             user.password = null;
 
-            await router.push({
+            router.push({
                 name: 'pages.dashboard',
             });
         }
