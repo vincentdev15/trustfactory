@@ -42,7 +42,7 @@ class ApiItemController extends Controller
         DB::transaction(function () use ($request, $item) {
             $product = Product::find($request->validated('product_id'));
 
-            if ($product->stock_quantity > 0) {
+            if ($product->available_quantity > 0) {
                 $cart = auth()->user()->cart->load('items.product');
 
                 if ($cart->status === CartStatusEnum::VALIDATED) {
@@ -93,7 +93,7 @@ class ApiItemController extends Controller
 
             $product = Product::find($request->validated('product_id'));
 
-            if ($quantity <= $product->stock_quantity) {
+            if ($quantity <= $cart->sattus === CartStatusEnum::OPEN ? $$product->available_quantity : $product->available_quantity + $item->quantity) {
                 if ($quantity === 0) {
                     $item->delete();
                 } else {
@@ -102,9 +102,11 @@ class ApiItemController extends Controller
             }
         });
 
-        $item->refresh();
+        $item->refresh()->load('product');
 
-        return $item->toResource();
+        return $item->toResource()->additional([
+            'product' => $item->product->toResource(),
+        ]);
     }
 
     /**

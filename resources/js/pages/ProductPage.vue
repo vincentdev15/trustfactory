@@ -55,7 +55,7 @@
         }
     });
 
-    const onProductUpdated = (updatedProduct) => {
+    const onProductUpdated = (updatedItem, updatedProduct) => {
         Object.assign(product, updatedProduct);
     }
     

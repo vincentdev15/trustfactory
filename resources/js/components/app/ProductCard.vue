@@ -14,7 +14,7 @@
                 <div class="flex flex-col">
                     <div class="text-3xl">{{ product.price }}</div>
 
-                    <div class="self-end text-sm italic">Stock : {{ authStore.user?.cart?.status === 'open' ? product.available_quantity : product.available_quantity + quantity }}</div>
+                    <div class="self-end text-sm italic">Stock : {{ product.available_quantity }}</div>
                 </div>
             </div>
         </RouterLink>
@@ -23,8 +23,8 @@
             v-if="authStore.user"
             :class="{
                 'flex items-center justify-center py-2': true,
-                'bg-gray-100': quantity <= (authStore.user?.cart?.status === 'open' ? product.available_quantity : product.available_quantity + quantity),
-                'bg-red-100': quantity > (authStore.user?.cart?.status === 'open' ? product.available_quantity : product.available_quantity + quantity),
+                'bg-gray-100': quantity <= product.available_quantity + quantity,
+                'bg-red-100': quantity > product.available_quantity + quantity,
             }"
         >
             <product-quantity :product="product" @product-updated="onProductUpdated"></product-quantity>
@@ -47,8 +47,8 @@
     const authStore = useAuthStore();
     const marketStore = useMarketStore();
 
-    const onProductUpdated = (updatedItem) => {
-        authStore.updateItem(updatedItem);
+    const onProductUpdated = (updatedItem, updatedProduct) => {
+        marketStore.updateProduct(updatedProduct);
     }
 
     const quantity = computed(() => {

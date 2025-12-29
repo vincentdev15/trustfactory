@@ -27,7 +27,7 @@
 
                     <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.price }}</td>
 
-                    <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.stock_quantity }}</td>
+                    <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.available_quantity }}</td>
 
                     <td class="flex justify-end px-3 py-2 transition-all group-hover:bg-primary/20">
                         <div class="flex items-center gap-4">

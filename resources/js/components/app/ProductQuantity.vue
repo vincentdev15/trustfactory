@@ -26,7 +26,7 @@
                 type="submit"
                 :inverse="true"
                 @click="updateQuantity(true)"
-                :disabled="quantity >= item.available_quantity"
+                :disabled="quantity >= (cart.status === 'open' ? product.available_quantity : product.available_quantity + item.quantity)"
             >+</vs-button>
         </div>
     </div>
@@ -50,18 +50,22 @@
 
     const errors = ref([]);
 
+    const cart = computed(() => {
+        return authStore.user?.cart ?? null;
+    });
+
     const isInCart = computed(() => {
-        if (!authStore.user?.cart?.items?.length) {
+        if (!cart.value?.items?.length) {
             return false;
         }
 
-        return authStore.user?.cart?.items?.some(
+        return cart.value?.items?.some(
             item => item.product_id === props.product.id
         );
     });
 
     const item = computed(() => {
-        return authStore.user?.cart?.items?.find(
+        return cart.value?.items?.find(
             item => item.product_id === props.product.id
         ) || null;
     });
@@ -82,7 +86,7 @@
             const res = await itemService.update(item.value);
 
             if (res.status === 200) {
-                emit('product-updated', res.data.data);
+                emit('product-updated', res.data.data, res.data.product);
             } else {
                 errors.value = res.response?.data?.errors;
             }

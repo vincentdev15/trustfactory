@@ -11,21 +11,8 @@ export const useAuthStore = defineStore('authStore', () => {
         initialized.value = true;
     }
 
-    const updateItem = async (updatedItem) => {
-        const index = user.value?.cart?.items?.findIndex(
-            item => item.id === updatedItem.id
-        ) ?? null;
-
-        if (index === -1) return;
-
-        if (index) {
-            user.value?.cart?.items?.splice(index, 1, updatedItem);
-        }
-    }
-
     return {
         setUser,
-        updateItem,
 
         user,
         initialized,
