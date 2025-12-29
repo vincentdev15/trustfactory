@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Cart;
 use App\Enums\CartStatusEnum;
+use App\Models\Cart;
 
 class CartService
 {

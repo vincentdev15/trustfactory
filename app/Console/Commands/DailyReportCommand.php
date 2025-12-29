@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use App\Models\Article;
-use Illuminate\Support\Carbon;
-use Illuminate\Console\Command;
+use App\Models\User;
 use App\Notifications\DailyReportNotification;
+use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class DailyReportCommand extends Command
 {
@@ -31,10 +31,9 @@ class DailyReportCommand extends Command
     {
         $date = Carbon::now();
 
-        $articles = Article::
-            whereHas('order', function ($query) use ($date) {
-                $query->whereDate('date', $date);
-            })
+        $articles = Article::whereHas('order', function ($query) use ($date) {
+            $query->whereDate('date', $date);
+        })
             ->with('product')
             ->get()
             ->groupBy('product_id')
@@ -42,7 +41,7 @@ class DailyReportCommand extends Command
                 return (object) [
                     'product' => $group->first()->product->name,
                     'total_sold' => $group->sum('quantity'),
-                    'total_revenue' => $group->sum(fn($article) => $article->unit_price * $article->quantity),
+                    'total_revenue' => $group->sum(fn ($article) => $article->unit_price * $article->quantity),
                 ];
             });
 

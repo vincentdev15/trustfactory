@@ -4,12 +4,12 @@ namespace App\Models;
 
 use App\Enums\CartStatusEnum;
 use App\Observers\CartObserver;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy([CartObserver::class])]
 class Cart extends Model
@@ -47,7 +47,7 @@ class Cart extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function totalPrice(): Attribute
     {
         return Attribute::make(

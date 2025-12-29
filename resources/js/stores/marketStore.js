@@ -6,7 +6,7 @@ export const useMarketStore = defineStore('marketStore', () => {
     const products = ref(null);
     
     const loadProducts = async () => {
-        const productsRes = await pageService.marketplace();
+        const productsRes = await pageService.market();
 
         if (productsRes.status === 200) {
             products.value = productsRes.data.data;

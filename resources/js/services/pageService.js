@@ -1,9 +1,9 @@
 import api from './api.js';
 
 export default {
-    async marketplace(filters) {
+    async market(filters) {
         try {
-            const res = await api.get('/pages/marketplace', {
+            const res = await api.get('/pages/market', {
                 params: filters,
             });
 
@@ -13,9 +13,9 @@ export default {
         }
     },
 
-    async product(product) {
+    async product(id) {
         try {
-            const res = await api.post(`/pages/product/${product.id}`);
+            const res = await api.get(`/pages/product/${id}`);
 
             return res;
         } catch (error) {

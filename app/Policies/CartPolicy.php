@@ -2,10 +2,9 @@
 
 namespace App\Policies;
 
+use App\Enums\CartStatusEnum;
 use App\Models\Cart;
 use App\Models\User;
-use App\Enums\CartStatusEnum;
-use Illuminate\Auth\Access\Response;
 
 class CartPolicy
 {
@@ -47,7 +46,7 @@ class CartPolicy
     public function validate(User $user, Cart $cart): bool
     {
         $can_validate = $cart->status === CartStatusEnum::OPEN && count($cart->items) > 0;
-        
+
         if ($can_validate) {
             foreach ($cart->items as $item) {
                 if ($item->quantity > $item->product->stock_quantity) {

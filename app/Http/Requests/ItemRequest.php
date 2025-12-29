@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ItemRequest extends FormRequest
 {
@@ -31,7 +31,7 @@ class ItemRequest extends FormRequest
             ],
         ];
     }
-    
+
     protected function cartItemExists(): bool
     {
         return $this->user()->cart->items()->where('product_id', $this->product_id)->exists();

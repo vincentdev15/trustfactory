@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Enums\CartStatusEnum;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Article extends Model
 {
@@ -41,7 +40,7 @@ class Article extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    
+
     public function totalPrice(): Attribute
     {
         return Attribute::make(

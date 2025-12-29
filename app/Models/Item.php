@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Enums\CartStatusEnum;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Item extends Model
 {
@@ -42,14 +42,14 @@ class Item extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    
+
     public function availableQuantity(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->cart->status === CartStatusEnum::OPEN ? $this->product->stock_quantity : $this->product->stock_quantity + $this->quantity,
         );
     }
-    
+
     public function totalPrice(): Attribute
     {
         return Attribute::make(

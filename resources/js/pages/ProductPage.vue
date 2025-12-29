@@ -36,7 +36,7 @@
 
 <script setup>
     import { reactive, onMounted, computed } from 'vue';
-    import productService from '@/services/productService.js';
+    import pageService from '@/services/pageService.js';
     import { useRoute } from 'vue-router';
     import { useAuthStore } from '@/stores/authStore.js';
 
@@ -48,7 +48,7 @@
     const product = reactive({});
     
     onMounted(async () => {
-        const res = await productService.show(id);
+        const res = await pageService.product(id);
 
         if (res.status === 200) {
             Object.assign(product, res.data.data);

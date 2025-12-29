@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Cart;
-use App\Models\Order;
-use App\Models\Article;
-use Illuminate\Http\Request;
 use App\Enums\CartStatusEnum;
-use App\Services\CartService;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Article;
+use App\Models\Order;
+use App\Services\CartService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class ApiCartController extends Controller

@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
+use App\Enums\CartStatusEnum;
 use App\Models\Cart;
 use App\Models\User;
-use App\Enums\CartStatusEnum;
 
 class UserObserver
 {

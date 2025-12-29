@@ -4,8 +4,6 @@ namespace App\Policies;
 
 use App\Models\Item;
 use App\Models\User;
-use App\Enums\CartStatusEnum;
-use Illuminate\Auth\Access\Response;
 
 class ItemPolicy
 {

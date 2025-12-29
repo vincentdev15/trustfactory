@@ -10,7 +10,7 @@ enum CartStatusEnum: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::OPEN => 'Open',
             self::VALIDATED => 'Validated',
             self::CHECKOUT => 'Checkout',

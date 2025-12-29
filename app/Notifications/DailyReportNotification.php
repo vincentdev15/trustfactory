@@ -12,6 +12,7 @@ class DailyReportNotification extends Notification implements ShouldQueue
     use Queueable;
 
     private $date;
+
     private $articles;
 
     /**

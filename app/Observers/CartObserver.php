@@ -2,12 +2,11 @@
 
 namespace App\Observers;
 
-use App\Models\Cart;
 use App\Enums\CartStatusEnum;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Queue;
 use App\Jobs\ClearCartAfterExpirationJob;
+use App\Models\Cart;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
+use Illuminate\Support\Carbon;
 
 class CartObserver implements ShouldHandleEventsAfterCommit
 {

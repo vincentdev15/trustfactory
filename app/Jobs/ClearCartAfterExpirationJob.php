@@ -2,19 +2,19 @@
 
 namespace App\Jobs;
 
-use App\Models\Cart;
 use App\Enums\CartStatusEnum;
+use App\Models\Cart;
 use App\Services\CartService;
-use Illuminate\Support\Carbon;
-use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Carbon;
 
 class ClearCartAfterExpirationJob implements ShouldQueue
 {
     use Queueable;
 
     public $cart;
-    
+
     /**
      * Create a new job instance.
      */

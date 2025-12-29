@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ProductRequest;
+use App\Models\Product;
+use Illuminate\Support\Facades\Gate;
 
 class ApiProductController extends Controller
 {
@@ -15,8 +14,6 @@ class ApiProductController extends Controller
      */
     public function index()
     {
-        Gate::authorize('viewAny', Product::class);
-
         $products = Product::orderBy('name')->get();
 
         return $products->toResourceCollection();

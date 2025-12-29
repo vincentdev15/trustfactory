@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 
 class ApiPagesController extends Controller
 {
-    public function marketplace()
+    public function market()
     {
         $products = Product::orderBy('name')->get();
 
