@@ -29,7 +29,7 @@ class DailyReportCommand extends Command
      */
     public function handle()
     {
-        $date = Carbon::now()->addDay(-1);
+        $date = Carbon::now();
 
         $articles = Article::
             whereHas('order', function ($query) use ($date) {
