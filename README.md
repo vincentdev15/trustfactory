@@ -2,13 +2,13 @@
 
 ## Technology stack
 
-### Backend technologies
+### Main backend technologies
 
 - Laravel v12
 - Fortify v1
 - Sanctum v4
 
-### Frontend technologies
+### Main frontend technologies
 
 - VueJS v3
 - TailwindCSS v4
@@ -19,9 +19,28 @@ To get it easier for the demonstration, I have use a simple SQLite database.
 
 ## Setup steps
 
+### Demonstration setup
+
+Execute the next commands to install all dependencies (PHP and node).
+
+(perhaps you need to install composer globally in your development environment)
+
+This command will :
+
+- install the back and the front dependencies
+- make a copy of the .env.example file to .env
+- generate the application key
+- migrate the database
+- seed the database with demo datas
+- build the front assets
+
+```
+composer setup-demo
+```
+
 ### .env file
 
-Make a copy of the .env.example file to the .env file and complete the following lines with your own data.
+You need to setup the value for these keys in the .env file.
 
 ```
 MAIL_USERNAME=
@@ -38,24 +57,12 @@ APP_ENV=production
 APP_DEBUG=false
 ```
 
-### Dependencies installation and app key generation
+### Run the application demonstration
 
-Execute the next commands to install all dependencies (PHP and node).
-
-(perhaprs you need to install composer globally in your development environment)
+You just have to run this command, it will execute the built-in Laravel queue worker and a schedule worker.
 
 ```
-composer install
-npm run dev && npm run build
-php artisan key:generate
-```
-
-### Application initialization
-
-You can initialize the database fake users and fake products.
-
-```
-php artisan teac:init --dev
+composer run demo
 ```
 
 ## Application tests
