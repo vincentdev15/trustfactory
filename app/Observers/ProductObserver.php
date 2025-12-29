@@ -22,7 +22,7 @@ class ProductObserver implements ShouldHandleEventsAfterCommit
      */
     public function updated(Product $product): void
     {
-        if ($product->wasChanged('stock_quantity') && $product->stock_quantity <= 5) {
+        if ($product->wasChanged('stock_quantity') && $product->stock_quantity <= $product->low_stock_limit) {
             $admin = User::where('is_admin', true)->first();
 
             if ($admin) {

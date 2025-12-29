@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->unsignedInteger('stock_quantity')->default(0);
             $table->unsignedInteger('reserved_stock_quantity')->default(0);
+            $table->unsignedInteger('low_stock_limit')->default(5);
             $table->timestamps();
         });
     }

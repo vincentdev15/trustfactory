@@ -9,6 +9,8 @@
 
                     <th class="px-3 py-2 text-end">Stock quantity</th>
 
+                    <th class="px-3 py-2 text-end">Low stock limit</th>
+
                     <th class="px-3 py-2 text-end">
                         <RouterLink class="transition-all text-primary hover:text-primary-dark" :to="{ name: 'pages.products.create' }" id="product-create-page">
                             Create a product
@@ -19,7 +21,10 @@
 
             <tbody>
                 <tr
-                    class="group"
+                    :class="{
+                        'group': true,
+                        'bg-red-100': product.stock_quantity - product.low_stock_limit <= 0,
+                    }"
                     v-for="product in products"
                     :key="product.id"
                 >
@@ -27,7 +32,9 @@
 
                     <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.price }}</td>
 
-                    <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.available_quantity }}</td>
+                    <td class="px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.stock_quantity }}</td>
+
+                    <td class=" px-3 py-2 text-end transition-all group-hover:bg-primary/20">{{ product.low_stock_limit }}</td>
 
                     <td class="flex justify-end px-3 py-2 transition-all group-hover:bg-primary/20">
                         <div class="flex items-center gap-4">
