@@ -47,11 +47,11 @@ router.beforeEach(async (to, from) => {
 
     if (isAuthenticated.value) {
         if (to.meta.require_admin && !authStore.user.is_admin) {
-            return { name: 'pages.marketplace' };
+            return { name: 'pages.market' };
         }
         
         if (to.name === 'pages.login') {
-            return authStore.user.is_admin ? { name: 'pages.dashboard' } : { name: 'pages.marketplace' };
+            return authStore.user.is_admin ? { name: 'pages.dashboard' } : { name: 'pages.market' };
         }
     }
 

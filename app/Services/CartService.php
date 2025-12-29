@@ -21,6 +21,20 @@ class CartService
         }
     }
 
+    public function decrementReservedStock(Cart $cart)
+    {
+        foreach ($cart->items as $item) {
+            $item->product->decrement('reserved_stock_quantity', $item->quantity);
+        }
+    }
+
+    public function incrementReservedStock(Cart $cart)
+    {
+        foreach ($cart->items as $item) {
+            $item->product->increment('reserved_stock_quantity', $item->quantity);
+        }
+    }
+
     public function clear(Cart $cart)
     {
         foreach ($cart->items as $item) {

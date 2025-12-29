@@ -79,7 +79,7 @@ class ApiCartController extends Controller
         Gate::authorize('validate', $cart);
 
         DB::transaction(function () use ($cart) {
-            $this->cartService->decrementStock($cart);
+            $this->cartService->incrementReservedStock($cart);
 
             $cart->update(['status' => CartStatusEnum::VALIDATED]);
         });
@@ -97,6 +97,9 @@ class ApiCartController extends Controller
         Gate::authorize('pay', $cart);
 
         DB::transaction(function () use ($cart) {
+            $this->cartService->decrementReservedStock($cart);
+            $this->cartService->decrementStock($cart);
+
             $order = new Order;
 
             $order->date = now();

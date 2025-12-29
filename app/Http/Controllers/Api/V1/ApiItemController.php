@@ -48,7 +48,7 @@ class ApiItemController extends Controller
                 if ($cart->status === CartStatusEnum::VALIDATED) {
                     $cart->update(['status' => CartStatusEnum::OPEN]);
 
-                    $this->cartService->incrementStock($cart);
+                    $this->cartService->decrementReservedStock($cart);
                 }
 
                 $item->fill($request->validated());
@@ -88,7 +88,7 @@ class ApiItemController extends Controller
             if ($cart->status === CartStatusEnum::VALIDATED) {
                 $cart->update(['status' => CartStatusEnum::OPEN]);
 
-                $this->cartService->incrementStock($cart);
+                $this->cartService->decrementReservedStock($cart);
             }
 
             $product = Product::find($request->validated('product_id'));
@@ -120,7 +120,7 @@ class ApiItemController extends Controller
             if ($cart->status === CartStatusEnum::VALIDATED) {
                 $cart->update(['status' => CartStatusEnum::OPEN]);
 
-                $this->cartService->incrementStock($cart);
+                $this->cartService->decrementReservedStock($cart);
             }
 
             $item->delete();

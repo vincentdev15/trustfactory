@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique()->collation('NOCASE');
             $table->decimal('price', 10, 2);
             $table->unsignedInteger('stock_quantity')->default(0);
+            $table->unsignedInteger('reserved_stock_quantity')->default(0);
             $table->timestamps();
         });
     }

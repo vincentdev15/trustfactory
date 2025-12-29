@@ -21,6 +21,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'stock_quantity' => $this->stock_quantity,
+            'available_quantity' => $this->available_quantity,
             'can_update' => $user?->can('update', $this->resource) ?? false,
             'can_delete' => $user?->can('delete', $this->resource) ?? false,
         ];

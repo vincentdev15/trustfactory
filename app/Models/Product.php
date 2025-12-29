@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\ProductObserver;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,7 @@ class Product extends Model
         'name',
         'price',
         'stock_quantity',
+        'reserved_stock_quantity',
     ];
 
     /**
@@ -30,11 +32,19 @@ class Product extends Model
         return [
             'price' => 'decimal:2',
             'stock_quantity' => 'integer',
+            'stock_quantity_reserved' => 'integer',
         ];
     }
 
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);
+    }
+    
+    public function availableQuantity(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->stock_quantity - $this->reserved_stock_quantity,
+        );
     }
 }

@@ -11,7 +11,7 @@ class InitCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'trustfactory:init {--dev}';
+    protected $signature = 'teac:init {--dev}';
 
     /**
      * The console command description.
