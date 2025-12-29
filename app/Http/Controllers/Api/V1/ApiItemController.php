@@ -93,7 +93,7 @@ class ApiItemController extends Controller
 
             $product = Product::find($request->validated('product_id'));
 
-            if ($quantity <= $cart->sattus === CartStatusEnum::OPEN ? $$product->available_quantity : $product->available_quantity + $item->quantity) {
+            if ($quantity <= ($cart->status === CartStatusEnum::OPEN ? $product->available_quantity : $product->available_quantity + $item->quantity)) {
                 if ($quantity === 0) {
                     $item->delete();
                 } else {
