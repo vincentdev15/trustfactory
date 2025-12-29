@@ -84,7 +84,11 @@ For such an application, it's important to trust the code, so the next step is t
 Here are some improvements that could be done :
 
 - optimize the sales funnel according to the needs of a real project
-- 
+- add an configuration page to let the admin configure dynamically the cart expiration delay and the daily report hour
+- the application should be, but currently is not responsive
+- add a better designed menu for the user
+- allow a user to have several carts
+- add visitor carts
 
 ## License
 
