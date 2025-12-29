@@ -14,7 +14,7 @@ class ApiProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('name')->get();
+        $products = Product::withCount('articles')->orderBy('name')->get();
 
         return $products->toResourceCollection();
     }
@@ -66,7 +66,7 @@ class ApiProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        Gate::authorize('delete', $product);
+        Gate::authorize('delete', $product->loadCount('articles'));
 
         $product->delete();
 

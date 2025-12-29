@@ -20,6 +20,7 @@ class Product extends Model
         'price',
         'stock_quantity',
         'reserved_stock_quantity',
+        'low_stock_limit',
     ];
 
     /**
@@ -34,6 +35,11 @@ class Product extends Model
             'stock_quantity' => 'integer',
             'stock_quantity_reserved' => 'integer',
         ];
+    }
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
     }
 
     public function items(): HasMany

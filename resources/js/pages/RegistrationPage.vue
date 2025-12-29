@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <vs-button @submit.prevent="register()">Register</vs-button>
+                        <vs-button class="w-full" @submit.prevent="register()">Register</vs-button>
                     </div>
 
                     <vs-link :to="{ name: 'pages.login' }" id="registration-page">I already have an account</vs-link>

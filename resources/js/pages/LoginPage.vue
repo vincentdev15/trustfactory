@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <vs-button type="submit">Login</vs-button>
+                    <vs-button class="w-full" type="submit">Login</vs-button>
                 </div>
 
                 <vs-link :to="{ name: 'pages.register' }" id="registration-page">I don't have an account yet</vs-link>

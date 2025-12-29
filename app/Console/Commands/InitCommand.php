@@ -18,7 +18,7 @@ class InitCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Application initialization';
 
     /**
      * Execute the console command.

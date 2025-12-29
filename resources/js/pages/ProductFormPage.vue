@@ -21,10 +21,16 @@
                         <vs-input id="stock_quantity" name="stock_quantity" type="number" min="0" step="1" v-model="product.stock_quantity"></vs-input>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                        <vs-button type="submit">Save</vs-button>
+                    <div class="flex flex-col gap-1">
+                        <vs-label>Low stock limit</vs-label>
 
-                        <vs-link-as-button :to="{ name: 'pages.dashboard' }">Cancel</vs-link-as-button>
+                        <vs-input id="low_stock_limit" name="low_stock_limit" type="number" min="0" step="1" v-model="product.low_stock_limit"></vs-input>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <vs-button class="w-1/2" type="submit">Save</vs-button>
+
+                        <vs-link-as-button class="w-1/2" :to="{ name: 'pages.dashboard' }">Cancel</vs-link-as-button>
                     </div>
                 </div>
             </form>

@@ -44,7 +44,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product): bool
     {
-        return $product->stock_quantity === 0;
+        return $product->stock_quantity === 0 && $product->articles_count === 0;
     }
 
     /**

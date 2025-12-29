@@ -25,6 +25,7 @@ class ProductRequest extends FormRequest
             'name' => 'required|string|max:255|unique:products,name,'.$this->route('product')?->id,
             'price' => 'required|numeric|min:0',
             'stock_quantity' => 'required|integer|min:0',
+            'low_stock_limit' => 'required|integer|min:0',
         ];
     }
 }
