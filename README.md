@@ -42,6 +42,8 @@ composer setup-demo
 
 You need to setup the value for these keys in the .env file.
 
+(the email is preconfigured to use mailtrap, feel free to setup the whole email configuration if you need another mail server)
+
 ```
 MAIL_USERNAME=
 MAIL_PASSWORD=
