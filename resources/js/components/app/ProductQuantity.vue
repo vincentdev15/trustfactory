@@ -97,7 +97,7 @@
         const res = await itemService.store(props.product.id);
 
         if (res.status === 201) {
-            emit('product-updated', res.data.data);
+            emit('product-updated', res.data.data, res.data.product);
         } else {
             errors.value = res.response.data.errors;
         }

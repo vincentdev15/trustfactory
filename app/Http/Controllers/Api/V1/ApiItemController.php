@@ -60,9 +60,11 @@ class ApiItemController extends Controller
             }
         });
 
-        $item->refresh();
+        $item->refresh()->load('product');
 
-        return $item->toResource();
+        return $item->toResource()->additional([
+            'product' => $item->product->toResource(),
+        ]);
     }
 
     /**

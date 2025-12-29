@@ -88,14 +88,11 @@
 
 <script setup>
     import { ref } from 'vue';
-    import { useRoute } from 'vue-router';
     import { useAuthStore } from '@/stores/authStore.js';
     import itemService from '@/services/itemService.js';
     import cartService from '@/services/cartService.js';
 
     const authStore = useAuthStore();
-
-    const route = useRoute();
 
     const errors = ref([]);
 

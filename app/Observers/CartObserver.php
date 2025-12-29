@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\Cart;
+use App\Enums\CartStatusEnum;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\ClearCartAfterExpirationJob;
+use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
+
+class CartObserver implements ShouldHandleEventsAfterCommit
+{
+    /**
+     * Handle the Cart "created" event.
+     */
+    public function created(Cart $cart): void
+    {
+        //
+    }
+
+    /**
+     * Handle the Cart "updated" event.
+     */
+    public function updated(Cart $cart): void
+    {
+        if ($cart->wasChanged('status')) {
+            if ($cart->status === CartStatusEnum::VALIDATED) {
+                ClearCartAfterExpirationJob::dispatch($cart)->delay(Carbon::now()->addMinutes(config('teac.cart_expiration_delay')));
+            }
+        }
+    }
+
+    /**
+     * Handle the Cart "deleted" event.
+     */
+    public function deleted(Cart $cart): void
+    {
+        //
+    }
+
+    /**
+     * Handle the Cart "restored" event.
+     */
+    public function restored(Cart $cart): void
+    {
+        //
+    }
+
+    /**
+     * Handle the Cart "force deleted" event.
+     */
+    public function forceDeleted(Cart $cart): void
+    {
+        //
+    }
+}
