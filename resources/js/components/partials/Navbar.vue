@@ -8,7 +8,7 @@
             </li>
 
             <li class="transition-all hover:text-primary">
-                <Link :href="route('pages.market')" id="market-page">
+                <Link :href="route('market')" id="market-page">
                     Market
                 </Link>
             </li>

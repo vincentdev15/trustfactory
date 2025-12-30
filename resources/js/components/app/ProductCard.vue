@@ -1,7 +1,7 @@
 <template>
     <article class="flex flex-col justify-between rounded-lg group transition-all border-2 border-gray-300 hover:border-primary overflow-hidden">
         <Link
-            :href="route('pages.product', { product: product.id })"
+            :href="route('product', { product: product.id })"
             id="product-public-page"
         >
             <div class="h-60 overflow-hidden">
@@ -27,7 +27,7 @@
                 'bg-red-100': quantity > product.available_quantity + quantity,
             }"
         >
-            <product-quantity :product="product" @product-updated="onProductUpdated"></product-quantity>
+            <product-quantity :product="product"></product-quantity>
         </div>
     </article>
 </template>

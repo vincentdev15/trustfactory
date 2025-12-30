@@ -30,7 +30,7 @@ class FortifyServiceProvider extends ServiceProvider
                 if (auth()->check() && auth()->user()->isAdmin()) {
                     return redirect()->route('dashboard');
                 } else {
-                    return redirect()->route('pages.market');
+                    return redirect()->route('market');
                 }
             }
         });
@@ -38,7 +38,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
             public function toResponse($request)
             {
-                return redirect()->route('pages.market');
+                return redirect()->route('market');
             }
         });
     }
