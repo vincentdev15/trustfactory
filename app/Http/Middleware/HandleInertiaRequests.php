@@ -45,39 +45,7 @@ class HandleInertiaRequests extends Middleware
                 'name' => $user->name,
                 'email' => $user->email,
                 'is_admin' => $user->is_admin,
-                'cart' => [
-                    'id' => $user->cart->id,
-                    'name' => $user->cart->name,
-                    'status' => $user->cart->status->value,
-                    'items' => $user->cart->items->map(function ($item) {
-                        return [
-                            'id' => $item->id,
-                            'cart_id' => $item->cart_id,
-                            'product_id' => $item->product_id,
-                            'product' => [
-                                'id' => $item->product->id,
-                                'name' => $item->product->name,
-                                'price' => $item->product->price,
-                                'stock_quantity' => $item->product->stock_quantity,
-                                'available_quantity' => $item->product->available_quantity,
-                                'low_stock_limit' => $item->product->low_stock_limit,
-                                'can_update' => $user?->can('update', $item->product) ?? false,
-                                'can_delete' => $user?->can('delete', $item->product) ?? false,
-                            ],
-                            'unit_price' => $item->unit_price,
-                            'quantity' => $item->quantity,
-                            'total_price' => $item->total_price,
-                            'available_quantity' => $item->available_quantity,
-                            'can_update' => $user?->can('update', $item) ?? false,
-                            'can_delete' => $user?->can('delete', $item) ?? false,
-                        ];
-                    }),
-                    'total_price' => $user->cart->total_price,
-                    'can_update' => $user?->can('update', $user->cart) ?? false,
-                    'can_delete' => $user?->can('delete', $user->cart) ?? false,
-                    'can_validate' => $user?->can('validate', $user->cart) ?? false,
-                    'can_pay' => $user?->can('pay', $user->cart) ?? false,
-                ],
+                'cart' => $user->cart->load('items.cart', 'items.product')->toResource(),
                 'items_count' => $user->cart->items->sum('quantity'),
             ];
         }

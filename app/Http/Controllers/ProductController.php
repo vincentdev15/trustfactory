@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         return Inertia::render('Products/Index', [
-            'products' => fn () => Product::withCount('articles')->orderBy('name')->get(),
+            'products' => fn () => Product::withCount('articles')->orderBy('name')->get()->toResourceCollection(),
         ]);
     }
 
@@ -24,6 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Product::class);
+
         $product = new Product;
 
         return Inertia::render('Products/Form', [
@@ -46,7 +48,7 @@ class ProductController extends Controller
 
         $product->refresh();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -54,7 +56,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $product->toResource();
+        //
     }
 
     /**
@@ -62,6 +64,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        Gate::authorize('update', $product);
+
         return Inertia::render('Products/Form', [
             'product' => $product,
         ]);
@@ -80,7 +84,7 @@ class ProductController extends Controller
 
         $product->refresh();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.products.index');
     }
 
     /**

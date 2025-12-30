@@ -12,7 +12,7 @@
                     <th class="px-3 py-2 text-end">Low stock limit</th>
 
                     <th class="px-3 py-2 text-end">
-                        <vs-link :href="route('admin.products.create')" id="product-create-page">
+                        <vs-link v-if="products.meta.can_create" :href="route('admin.products.create')" id="product-create-page">
                             Create a product
                         </vs-link>
                     </th>
@@ -25,7 +25,7 @@
                         'group': true,
                         'bg-red-100': product.stock_quantity - product.low_stock_limit <= 0,
                     }"
-                    v-for="product in products"
+                    v-for="product in products.data"
                     :key="product.id"
                 >
                     <td class="px-3 py-2 transition-all group-hover:bg-primary/20">{{ product.name }}</td>
@@ -42,7 +42,7 @@
                                 Edit
                             </vs-link>
 
-                            <form @submit.prevent="router.delete(route('admin.products.destroy', { product: product.id }))">
+                            <form @submit.prevent="router.delete(route('admin.products.destroy', { product: product.id }), { preserveScroll: true })">
                                 <vs-button size="small" type="submit" :disabled="!product.can_delete">Delete</vs-button>
                             </form>
                         </div>
