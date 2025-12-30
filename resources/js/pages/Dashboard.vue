@@ -42,6 +42,9 @@
                                 Edit
                             </vs-link>
 
+                            <form @submit.prevent="router.delete(route('products.destroy', { product: product.id }))">
+                                <vs-button size="small" type="submit" :disabled="!product.can_delete">Delete</vs-button>
+                            </form>
                         </div>
                     </td>
                 </tr>
@@ -51,6 +54,8 @@
 </template>
 
 <script setup>
+    import { router } from '@inertiajs/vue3';
+
     defineProps({
         products: Array,
     });
