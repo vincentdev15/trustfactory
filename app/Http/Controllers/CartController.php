@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Services\CartService;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CartController extends Controller
 {

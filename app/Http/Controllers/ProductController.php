@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ProductRequest;
+use App\Models\Product;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {

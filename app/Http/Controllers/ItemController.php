@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CartStatusEnum;
+use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Enums\CartStatusEnum;
 use App\Services\CartService;
-use App\Http\Requests\ItemRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 

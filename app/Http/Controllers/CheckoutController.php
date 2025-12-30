@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\Article;
-use Illuminate\Http\Request;
 use App\Enums\CartStatusEnum;
+use App\Models\Article;
+use App\Models\Order;
 use App\Services\CartService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -33,7 +32,7 @@ class CheckoutController extends Controller
 
         return redirect()->route('cart');
     }
-    
+
     public function pay()
     {
         $cart = auth()->user()->cart->load('items.product');
