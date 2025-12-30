@@ -2,16 +2,23 @@
 
 ## Technology stack
 
+You have 2 versions of the project :
+
+- a first one without InertiaJS, please go the main branch
+- a first one with InertiaJS, please go to the inertia branch
+
 ### Main backend technologies
 
 - Laravel v12
 - Fortify v1
-- Sanctum v4
+- Sanctum v4 / git branch main
+- Inertia v2 / git branch inertia
 
 ### Main frontend technologies
 
 - VueJS v3
 - TailwindCSS v4
+- InertiaJS for Vue3 v2.3 / git branch inertia
 
 ### Database
 
@@ -108,6 +115,7 @@ Here are some improvements that could be done :
 - check if the cart expiration delay and the daily report hour have valid values
 - retrieve the unit price only while validating the cart (currently it's retrieve when the product is put in the cart)
 - add a confirmation dialog modal for sensitive actions like deleting a product
+- attach the products to different categories and filter the market page with categories and keywords
 
 ## License
 
