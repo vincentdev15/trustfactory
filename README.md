@@ -115,6 +115,7 @@ Here are some improvements that could be done :
 - check if the cart expiration delay and the daily report hour have valid values
 - retrieve the unit price only while validating the cart (currently it's retrieve when the product is put in the cart)
 - add a confirmation dialog modal for sensitive actions like deleting a product
+- attach the products to different categories and filter the market page with categories and keywords
 
 ## License
 
