@@ -16,8 +16,8 @@
 
         <ul class="flex items-center justify-around gap-8 text-xl">
             <li v-show="user && user.is_admin" class="transition-all hover:text-primary">
-                <Link :href="route('dashboard')" id="dashboard-page">
-                    Dashboard
+                <Link :href="route('admin.products.index')" id="products-page">
+                    Products
                 </Link>
             </li>
 

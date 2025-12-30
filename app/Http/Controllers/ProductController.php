@@ -14,9 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withCount('articles')->orderBy('name')->get();
-
-        return $products->toResourceCollection();
+        return Inertia::render('Products/Index', [
+            'products' => fn () => Product::withCount('articles')->orderBy('name')->get(),
+        ]);
     }
 
     /**

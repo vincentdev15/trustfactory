@@ -29,7 +29,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 if (auth()->check() && auth()->user()->isAdmin()) {
-                    return redirect()->route('dashboard');
+                    return redirect()->route('products.index');
                 } else {
                     return redirect()->route('market');
                 }

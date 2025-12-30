@@ -1,7 +1,7 @@
 <template>
     <div class="w-80 self-center">
         <vs-box>
-            <form @submit.prevent="!props.product.id ? form.post(route('products.store')) : form.put(route('products.update', { product: props.product.id }))">
+            <form @submit.prevent="!props.product.id ? form.post(route('admin.products.store')) : form.put(route('admin.products.update', { product: props.product.id }))">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-1">
                         <vs-label>Name</vs-label>
@@ -38,7 +38,7 @@
                     <div class="flex items-center gap-4">
                         <vs-button class="w-1/2" type="submit">Save</vs-button>
 
-                        <vs-link-as-button class="w-1/2" :href="route('dashboard')">Cancel</vs-link-as-button>
+                        <vs-link-as-button class="w-1/2" :href="route('admin.products.index')">Cancel</vs-link-as-button>
                     </div>
                 </div>
             </form>

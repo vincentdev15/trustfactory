@@ -12,7 +12,7 @@
                     <th class="px-3 py-2 text-end">Low stock limit</th>
 
                     <th class="px-3 py-2 text-end">
-                        <vs-link :href="route('products.create')" id="product-create-page">
+                        <vs-link :href="route('admin.products.create')" id="product-create-page">
                             Create a product
                         </vs-link>
                     </th>
@@ -38,11 +38,11 @@
 
                     <td class="flex justify-end px-3 py-2 transition-all group-hover:bg-primary/20">
                         <div class="flex items-center gap-4">
-                            <vs-link :href="route('products.edit', { product: product.id })" id="product-edit-page">
+                            <vs-link :href="route('admin.products.edit', { product: product.id })" id="product-edit-page">
                                 Edit
                             </vs-link>
 
-                            <form @submit.prevent="router.delete(route('products.destroy', { product: product.id }))">
+                            <form @submit.prevent="router.delete(route('admin.products.destroy', { product: product.id }))">
                                 <vs-button size="small" type="submit" :disabled="!product.can_delete">Delete</vs-button>
                             </form>
                         </div>

@@ -15,8 +15,6 @@ Route::get('market', [PageController::class, 'market'])->name('market');
 Route::get('product/{product}', [PageController::class, 'product'])->name('product');
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
-
     Route::get('cart', [CartController::class, 'show'])->name('cart');
 
     Route::post('checkout/validate', [CheckoutController::class, 'validate'])->name('checkout.validate');
@@ -24,5 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('items', ItemController::class);
 
-    Route::resource('products', ProductController::class);
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('products', ProductController::class);
+    });
 });
