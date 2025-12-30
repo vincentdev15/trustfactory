@@ -1,7 +1,7 @@
 <template>
     <div class="w-80 self-center">
         <vs-box>
-            <form @submit.prevent="login()" class="flex flex-col gap-4">
+            <form @submit.prevent="user.post(route('login.store'))" class="flex flex-col gap-4">
                 <div class="flex flex-col gap-1">
                     <vs-label>Email</vs-label>
 
@@ -18,34 +18,17 @@
                     <vs-button class="w-full" type="submit">Login</vs-button>
                 </div>
 
-                <vs-link :to="{ name: 'pages.register' }" id="registration-page">I don't have an account yet</vs-link>
+                <vs-link :href="route('register')" id="registration-page">I don't have an account yet</vs-link>
             </form>
         </vs-box>
     </div>
 </template>
 
 <script setup>
-    import { reactive } from 'vue';
-    import { useRouter } from 'vue-router';
-    import authService from '@/services/authService.js';
-
-    const user = reactive({
+    import { useForm } from '@inertiajs/vue3';
+    
+    const user = useForm({
         email: null,
         password: null,
     });
-
-    const router = useRouter();
-
-    async function login() {
-        const res = await authService.login(user);
-
-        if (res.status === 200) {
-            user.email = null;
-            user.password = null;
-
-            router.push({
-                name: 'pages.dashboard',
-            });
-        }
-    }
 </script>

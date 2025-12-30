@@ -26,16 +26,15 @@
                 type="submit"
                 :inverse="true"
                 @click="updateQuantity(true)"
-                :disabled="quantity >= (cart.status === 'open' ? product.available_quantity : product.available_quantity + item.quantity)"
+                :disabled="quantity >= (page.props.auth.user?.cart?.status === 'open' ? product.available_quantity : product.available_quantity + item.quantity)"
             >+</vs-button>
         </div>
     </div>
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
-    import itemService from '@/services/itemService.js';
-    import { useAuthStore } from '@/stores/authStore.js';
+    import { router, usePage } from '@inertiajs/vue3';
+    import { computed } from 'vue';
 
     const props = defineProps({
         product: {
@@ -44,28 +43,22 @@
         },
     });
 
-    const emit = defineEmits(['product-updated'])
+    const page = usePage();
 
-    const authStore = useAuthStore();
-
-    const errors = ref([]);
-
-    const cart = computed(() => {
-        return authStore.user?.cart ?? null;
-    });
+    const emit = defineEmits(['item-quantity-updated'])
 
     const isInCart = computed(() => {
-        if (!cart.value?.items?.length) {
+        if (!page.props.auth.user?.cart?.items?.length) {
             return false;
         }
 
-        return cart.value?.items?.some(
+        return page.props.auth.user?.cart?.items?.some(
             item => item.product_id === props.product.id
         );
     });
 
     const item = computed(() => {
-        return cart.value?.items?.find(
+        return page.props.auth.user?.cart?.items?.find(
             item => item.product_id === props.product.id
         ) || null;
     });
@@ -83,24 +76,38 @@
 
             item.value.quantity = newValue;
 
-            const res = await itemService.update(item.value);
-
-            if (res.status === 200) {
-                emit('product-updated', res.data.data, res.data.product);
-            } else {
-                errors.value = res.response?.data?.errors;
-            }
+            router.put(route('items.update', { item: item.value.id }),
+                { ...item.value },
+                {
+                    onSuccess: () => {
+                        emit('item-quantity-updated', item.value);
+                    },
+                    onError: (errors) => {
+                        errors.value = res.response?.data?.errors;
+                    },
+                    onFinish: () => {
+                        //
+                    }
+                }
+            );
         }
     });
 
     const addToCart = async () => {
-        const res = await itemService.store(props.product.id);
-
-        if (res.status === 201) {
-            emit('product-updated', res.data.data, res.data.product);
-        } else {
-            errors.value = res.response.data.errors;
-        }
+        router.post(route('items.store'),
+            { product_id: props.product.id },
+            {
+                onSuccess: () => {
+                    emit('item-quantity-updated', item.value);
+                },
+                onError: (errors) => {
+                    errors.value = errors;
+                },
+                onFinish: () => {
+                    //
+                }
+            }
+        );
     }
 
     const updateQuantity = async (add = true) => {

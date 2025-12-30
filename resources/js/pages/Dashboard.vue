@@ -12,9 +12,9 @@
                     <th class="px-3 py-2 text-end">Low stock limit</th>
 
                     <th class="px-3 py-2 text-end">
-                        <RouterLink class="transition-all text-primary hover:text-primary-dark" :to="{ name: 'pages.products.create' }" id="product-create-page">
+                        <vs-link :href="route('products.create')" id="product-create-page">
                             Create a product
-                        </RouterLink>
+                        </vs-link>
                     </th>
                 </tr>
             </thead>
@@ -38,13 +38,10 @@
 
                     <td class="flex justify-end px-3 py-2 transition-all group-hover:bg-primary/20">
                         <div class="flex items-center gap-4">
-                            <RouterLink class="transition-all text-primary hover:text-primary-dark" :to="{ name: 'pages.products.edit', params: { id: product.id } }" id="product-edit-page">
+                            <vs-link :href="route('products.edit', { product: product.id })" id="product-edit-page">
                                 Edit
-                            </RouterLink>
+                            </vs-link>
 
-                            <form @submit.prevent="destroy(product.id)">
-                                <vs-button size="small" type="submit" :disabled="!product.can_delete">Delete</vs-button>
-                            </form>
                         </div>
                     </td>
                 </tr>
@@ -54,40 +51,7 @@
 </template>
 
 <script setup>
-    import { ref, onMounted } from 'vue';
-    import productService from '@/services/productService.js';
-
-    const loading = ref(false);
-
-    const products = ref([]);
-
-    onMounted(async () => {
-        loadDatas();
+    defineProps({
+        products: Array,
     });
-
-    const loadDatas = async () => {
-        loading.value = true;
-
-        const productsRes = await productService.index();
-
-        if (productsRes.status === 200) {
-            products.value = productsRes.data.data;
-        }
-
-        loading.value = false;
-    }
-
-    const destroy = async (id) => {
-        const res = await productService.destroy(id);
-
-        if (res.status === 200) {
-            const index = products.value.findIndex(product => product.id === id);
-
-            if (index !== -1) {
-                products.value.splice(index, 1);
-            }
-        } else {
-            errors.value = res.response.data.errors;
-        }
-    }
 </script>

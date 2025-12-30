@@ -7,12 +7,16 @@
 
         <title>Trustfactory</title>
 
+        @routes
+        
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @endif
+
+        @inertiaHead
     </head>
 
     <body class="flex flex-col min-h-screen">
-        <div id="trustfactory" class="grow relative flex flex-col"></div>
+        @inertia('trustfactory')
     </body>
 </html>

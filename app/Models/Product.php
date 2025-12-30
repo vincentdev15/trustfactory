@@ -23,6 +23,10 @@ class Product extends Model
         'low_stock_limit',
     ];
 
+    protected $appends = [
+        'available_quantity',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *

@@ -1,7 +1,7 @@
 <template>
     <article class="flex flex-col justify-between rounded-lg group transition-all border-2 border-gray-300 hover:border-primary overflow-hidden">
-        <RouterLink
-            :to="{ name: 'pages.product', params: { id: product.id } }"
+        <Link
+            :href="route('pages.product', { product: product.id })"
             id="product-public-page"
         >
             <div class="h-60 overflow-hidden">
@@ -17,10 +17,10 @@
                     <div class="self-end text-sm italic">Stock : {{ product.available_quantity }}</div>
                 </div>
             </div>
-        </RouterLink>
+        </Link>
 
         <div
-            v-if="authStore.user"
+            v-if="user"
             :class="{
                 'flex items-center justify-center py-2': true,
                 'bg-gray-100': quantity <= product.available_quantity + quantity,
@@ -33,9 +33,8 @@
 </template>
 
 <script setup>
+    import { Link, usePage } from '@inertiajs/vue3';
     import { computed } from 'vue';
-    import { useAuthStore } from '@/stores/authStore.js';
-    import { useMarketStore } from '@/stores/marketStore.js';
 
     const props = defineProps({
         product: {
@@ -44,15 +43,12 @@
         },
     });
 
-    const authStore = useAuthStore();
-    const marketStore = useMarketStore();
+    const page = usePage();
 
-    const onProductUpdated = (updatedItem, updatedProduct) => {
-        marketStore.updateProduct(updatedProduct);
-    }
+    const user = computed(() => page.props.auth.user);
 
     const quantity = computed(() => {
-        const item = authStore.user?.cart?.items?.find(
+        const item = user?.cart?.items?.find(
             item => item.product_id === props.product.id
         ) || null;
 

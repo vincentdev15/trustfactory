@@ -19,7 +19,7 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="item in authStore.user?.cart?.items" :key="item.id">
+                    <tr v-for="item in user?.cart?.items" :key="item.id">
                         <td class="px-4 py-4">
                             <div class="w-40 h-32">
                                 <img class="w-full h-full object-cover rounded-lg" src="https://picsum.photos/600/400" alt="Fake image">
@@ -34,7 +34,7 @@
                             <div class="relative flex justify-center">
                                 <product-quantity :product="item.product"></product-quantity>
 
-                                <div v-if="item.quantity > item.product.stock_quantity && authStore.user.cart.status === 'open'" class="absolute -bottom-8 text-center text-red-500">
+                                <div v-if="item.quantity > item.product.stock_quantity && user.cart.status === 'open'" class="absolute -bottom-8 text-center text-red-500">
                                     Stock : {{ item.product.stock_quantity }}    
                                 </div>
                             </div>
@@ -43,10 +43,8 @@
                         <td class="px-4 py-4 text-end">{{ item.total_price }}</td>
 
                         <td class="px-4 py-4 text-end">
-                            <form @submit.prevent="deleteItem(item.id)">
-                                <div class="flex flex-col gap-4">
-                                    <vs-button type="submit">Delete</vs-button>
-                                </div>
+                            <form @submit.prevent="router.delete(route('items.destroy', { item: item.id }))">
+                                <vs-button type="submit">Delete</vs-button>
                             </form>
                         </td>
                     </tr>
@@ -60,24 +58,24 @@
 
                 <div class="grow flex flex-col gap-4">
                     <div class="flex flex-col gap-1">
-                        <div class="text-5xl text-primary">{{ authStore.user?.cart?.total_price }}</div>
+                        <div class="text-5xl text-primary">{{ user?.cart?.total_price }}</div>
 
                         <div class="italic text-gray-500">Total price</div>                        
                     </div>
                 </div>
 
-                <div v-if="authStore.user.cart.can_validate">
-                    <form @submit.prevent="validateCart()">
+                <div v-if="user.cart.can_validate">
+                    <form @submit.prevent="router.post(route('checkout.validate'))">
                         <div class="flex flex-col gap-4">
-                            <vs-button type="submit" :disabled="!authStore.user.cart.can_validate">VALIDATE THE CART</vs-button>
+                            <vs-button type="submit" :disabled="!user.cart.can_validate">VALIDATE THE CART</vs-button>
                         </div>
                     </form>
                 </div>
 
-                <div v-if="authStore.user.cart.can_pay">
-                    <form @submit.prevent="payCart()">
+                <div v-if="user.cart.can_pay">
+                    <form @submit.prevent="router.post(route('checkout.pay'))">
                         <div class="flex flex-col gap-4">
-                            <vs-button type="submit" :disabled="!authStore.user.cart.can_pay">PAY</vs-button>
+                            <vs-button type="submit" :disabled="!user.cart.can_pay">PAY</vs-button>
                         </div>
                     </form>
                 </div>
@@ -87,42 +85,12 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import { useAuthStore } from '@/stores/authStore.js';
-    import itemService from '@/services/itemService.js';
-    import cartService from '@/services/cartService.js';
+    import { router, usePage } from '@inertiajs/vue3';
+    import { ref, computed } from 'vue';
 
-    const authStore = useAuthStore();
+    const page = usePage();
+
+    const user = computed(() => page.props.auth.user);
 
     const errors = ref([]);
-
-    const deleteItem = async (id) => {
-        const res = await itemService.destroy(id);
-
-        if (res.status === 200) {
-            
-        } else {
-            errors.value = res.response.data.errors;
-        }
-    }
-
-    const validateCart = async () => {
-        const res = await cartService.validate();
-
-        if (res.status === 200) {
-            
-        } else {
-            errors.value = res.response.data.errors;
-        }
-    }
-
-    const payCart = async () => {
-        const res = await cartService.pay();
-
-        if (res.status === 200) {
-            
-        } else {
-            errors.value = res.response.data.errors;
-        }
-    }
 </script>

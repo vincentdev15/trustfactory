@@ -18,10 +18,10 @@
                     <div>{{ product.price }}</div>
                 </div>
 
-                <div v-if="authStore.user" class="flex flex-col gap-4">
+                <div v-if="user" class="flex flex-col gap-4">
                     <div v-if="item">Quantity :</div>
 
-                    <product-quantity :product="product" @product-updated="onProductUpdated"></product-quantity>
+                    <product-quantity :product="product"></product-quantity>
                 </div>
 
                 <div v-if="item" class="font-bold flex items-center justify-between">
@@ -35,32 +35,19 @@
 </template>
 
 <script setup>
-    import { reactive, onMounted, computed } from 'vue';
-    import pageService from '@/services/pageService.js';
-    import { useRoute } from 'vue-router';
-    import { useAuthStore } from '@/stores/authStore.js';
+    import { usePage } from '@inertiajs/vue3';
+    import { computed } from 'vue';
 
-    const authStore = useAuthStore();
-
-    const route = useRoute();
-    const id = route.params.id ?? null;
-
-    const product = reactive({});
-    
-    onMounted(async () => {
-        const res = await pageService.product(id);
-
-        if (res.status === 200) {
-            Object.assign(product, res.data.data);
-        }
+    defineProps({
+        product: Object,
     });
 
-    const onProductUpdated = (updatedItem, updatedProduct) => {
-        Object.assign(product, updatedProduct);
-    }
-    
+    const page = usePage();
+
+    const user = computed(() => page.props.auth.user);
+
     const item = computed(() => {
-        return authStore.user?.cart?.items?.find(
+        return user?.cart?.items?.find(
             item => item.product_id === product.id
         ) || null;
     });

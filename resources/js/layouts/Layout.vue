@@ -6,7 +6,7 @@
     </header>
 
     <main class="grow flex flex-col p-8 gap-4 text-dark">
-        <RouterView></RouterView>
+        <slot></slot>
     </main>
 </template>
 

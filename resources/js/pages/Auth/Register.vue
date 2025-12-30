@@ -1,7 +1,7 @@
 <template>
     <div class="w-80 self-center">
         <vs-box>
-            <form @submit.prevent="register()">
+            <form @submit.prevent="user.post(route('register.store'))" class="flex flex-col gap-4">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-1">
                         <vs-label>Name</vs-label>
@@ -31,7 +31,7 @@
                         <vs-button class="w-full" @submit.prevent="register()">Register</vs-button>
                     </div>
 
-                    <vs-link :to="{ name: 'pages.login' }" id="registration-page">I already have an account</vs-link>
+                    <vs-link :href="route('login')" id="registration-page">I already have an account</vs-link>
                 </div>
             </form>
         </vs-box>
@@ -39,31 +39,13 @@
 </template>
 
 <script setup>
-    import { reactive } from 'vue';
-    import { useRouter } from 'vue-router';
-    import authService from '@/services/authService.js';
-
-    const user = reactive({
+    import { useForm } from '@inertiajs/vue3';
+    
+    const user = useForm({
         name: null,
         email: null,
         password: null,
         password_confirmation: null,
     });
 
-    const router = useRouter();
-
-    async function register() {
-        const res = await authService.register(user);
-
-        if (res.status === 201) {
-            user.name = null;
-            user.email = null;
-            user.password = null;
-            user.password_confirmation = null;
-
-            router.push({
-                name: 'pages.dashboard',
-            });
-        }
-    }
 </script>
