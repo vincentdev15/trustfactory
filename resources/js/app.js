@@ -35,7 +35,7 @@ createInertiaApp({
 
         const page = pages[`./pages/${name}.vue`];
         
-        page.default.layout ??= Layout;
+        page.default.layout = page.default.layout || Layout;
 
         return page;
     },
